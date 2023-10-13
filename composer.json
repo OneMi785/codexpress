@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.15",
         "easycorp/easyadmin-bundle": "^4.7",
         "fakerphp/faker": "^1.23",
+        "georgehadjisavva/elevenlabs-api-client": "^1.0",
         "guzzlehttp/guzzle": "^7.7",
         "knplabs/knp-paginator-bundle": "^6.2",
         "nyholm/psr7": "^1.8",

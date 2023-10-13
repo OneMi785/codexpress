@@ -9,6 +9,7 @@
 		<h1 class="article-title">
 			{{ snippet.title }}
 		</h1>
+        {# <audio src={{ audio.url }} controls></audio> #}
 		<p>
             Rédigé par <kbd>{{ snippet.user.username }}</kbd>
              | Statut : 
@@ -60,8 +61,50 @@
         </div>
 
         {% if Explication %}
-            <p>{{ Explication }}</p>
+            <button onclick="tts()">Lire la réponse</button>
+            <p class="explication">{{ Explication }}</p>
         {% endif %}
 
 	</article>
+
+    <script>
+
+        const explication = document.querySelector('.explication').value;
+
+        function tts(params) {
+            // Fetch
+            // Initialisation du body pour la requête
+            let body = {
+                'text': $explication,
+                'model_id': 'eleven_multilingual_v1',
+                'voice_settings': {
+                'stability': 0,
+                'similarity_boost': 0,
+                'style': 0,
+                'use_speaker_boost' : true,
+                }
+            }
+            // Paramètre de la requête
+            const options = {
+                method: 'POST',
+                headers: {
+                    'accept': '*/*',
+                    'xi-api-key': '95d60a27c74231a4f733fcfb8a2e0aeb',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body),
+            };
+            let url = 'https://api.elevenlabs.io/v1/text-to-speech/CYw3kZ02Hs0563khs1Fj/stream?optimize_streaming_latency=0&output_format=mp3_44100_128'
+            // Fetch de la requête vers l'API ElevenLabs en POST
+            fetch(url, options)
+                .then(responses.ok) => {
+                    // Si la requête est OK
+                    if (responses.json())
+                        // On retourne la réponse en JSON
+                        return responses.json();
+                        console.log(responses);
+                }
+            }
+    </script>
+
 {% endblock %}
